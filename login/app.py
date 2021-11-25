@@ -13,8 +13,6 @@ _INF = float("inf")
 
 graphs = {}
 graphs['t'] = Counter('python_login_requests_total', 'The total number of processed login requests')
-graphs['er'] = Counter('python_error_percentage', 'Error Percentage of login requests')
-graphs['cp'] = Counter('python_cpu_utilization', 'Cpu utilization')
 graphs['s'] = Counter('python_login_requests_processed', 'The total number of successful login requests')
 graphs['f'] = Counter('python_login_requests_failed', 'The total number of failed login requests')
 graphs['h'] = Histogram('python_request_duration_seconds', 'Histogram for the duration in seconds.', buckets=(1, 2, 3, _INF))
@@ -24,7 +22,6 @@ graphs['h'] = Histogram('python_request_duration_seconds', 'Histogram for the du
 def index():
    start = time.time()
    graphs['t'].inc()
-   toal=graphs['t']
    
    time.sleep(0.600)
    end = time.time()
@@ -52,12 +49,6 @@ def success():
 def errorlogin():
    start = time.time()
    graphs['f'].inc()
-   err=graphs['f']
-   
-   toal = graphs['t']
-   toal1=int(toal)
-   errp=toal1*100
-   graphs['er']=errp
    time.sleep(0.800)
    end = time.time()
    graphs['h'].observe(end - start)
@@ -65,10 +56,6 @@ def errorlogin():
 
 @app.route("/metrics")
 def requests_count():
-
-
-    graph['cp']=psutil.cpu_percent(4)
-
     res = []
     for k,v in graphs.items():
         res.append(prometheus_client.generate_latest(v))
