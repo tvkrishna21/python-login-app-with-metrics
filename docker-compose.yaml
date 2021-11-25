@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  login:
+    build:
+      context: ./login
+    container_name: python-login-app-with-exp
+    image: tvkrishna21/python-login-app-with-exp:1.0.0
+    ports:
+    - "5000:5000"
+    volumes:
+    - .:/code
+
